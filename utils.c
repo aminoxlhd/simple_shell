@@ -1,121 +1,123 @@
 #include "main.h"
 
-char * built_in[] = {"exit", "env", NULL};
-
-/*
- * Count how words delimited by spaces.
+static char *built_in[] = {"exit", "env", NULL};
+/**
+ * count_words - count how many words in s string
+ * by delimeter
+ * @string : the string we use .
+ * @delim : the delimeter we use.
+ * Return : the number.
  */
 int count_words(char *string, char delim)
 {
-	int i = 1, count = 0;
+	int = 1, count = 0;
 
 	while (string[i] != '\0')
 	{
-	
-		if (string[i]) != delim && (string[i+1] == '\t' || string[i + 1] == '\0')
-		{
+		if (string[i] != delim && (string[i + 1] == delim || string[i + 1] ==
+		'\t' || string[i + 1] == '\0'))
 			count++;
-		}
-			i++;
+		i++
 	}
-		return (count);
+	return (count);
 }
 
 /**
- * Split a line by spaces.
- **/
-char **split_arguments(char *binaryPath, char * delim)
+ * split_arguments - a functiont that split a string by a delimeter
+ * @binaryPath : the string we want to split
+ * @delim : the delimeter we want to use.
+ * Return: a pointr to cahr * with the words splitted.
+ */
+char **split_arguments(char *binaryPath, char *delim)
 {
 	char **arguments;
 	int count = 0, j = 0;
+	char *ptr;
 
-	count = count_wods(binaryPath, delim[0]);
-	arguments = ,alloc(sizeof(char *) * (count + 1));
+	count = count_words(binaryPath, delim[0]);
+	arguments = malloc(size(char *) * (count + 1));
 
-	char *ptr = strtok(binaryPath, delim);
+	ptr = strtok(binaryPath, delim);
 
-	while(ptr != NULL)
+	while (ptr != NULL)
 	{
-	arguments[j] = malloc(sizeof(char) * (strlen(ptr) + 1));
-	strcpy(rguments[j], ptr);
-	ptr = strtok(NULL, delim);
-	j++;
+		arguments[j] = malloc(sizeof(char) * (strlen(ptr) + 1));
+		strcpy(arguments[j], ptr);
+		ptr = strtok(NULL, delim);
+		j++;
 	}
 	arguments[j] = NULL;
 
 	return (arguments);
 }
-
 /**
- * a function that return the right path
- * otherwise returns NULL.
- **/
-
-char * get_path(char * command)
+ * get_path - a function that return the right
+ * path for the command otherwise returns NULL
+ * @command : the command we want to check .
+ *
+ * Return: either the path, or NULL
+ */
+char *get_path(char *command)
 {
 	int i = 0;
-	int command_found = 0;
-	char * path = getenv("PATH");
-	char * path_cpy = malloc(sizeof(char) * strlen(path));
-	strcpy(path_cpy, path);
-	char ** paths = split_arguments(path_cpy, ":");
-	char * command_with_path;
-	char * path_with_slash;
+	char **paths;
+	char *command_wth_path;
+	char *path_with_slash;
+	char *path = getenv("PATH");
+	char *path_cpy = malloc(sizeof(char) * strlen(path));
 
-	for(i = 0; paths[i] != NULL; i++)
+	strcpy(path_cpy, path);
+	paths = split_arguments(path_cpy, ":");
+	for (i = 0; paths[i] != NULL; i++)
 	{
 		path_with_slash = strcat(paths[i], "/");
 		command_with_path = strcat(path_with_slash, command);
+		if (access(command_with_path, F_OK) == 0)
+			return (command_with_path);
+	}
+	return (NULL);
+}
 
-	if(i = 0; paths[i] != NULL; i++)
+/**
+ * check_command - a function that will check if a command is valid
+ * @command : the command we want to check.
+ * Return: will return 1 if the command is valid
+ * will return 0 if the command is invalid
+ */
+int check_command(char *command)
+{
+	int i = 0;
+	char *command_with_path;
+
+	for (i = 0; command[i] != '\0'; i++)
 	{
-		path_with_slash = strcat(paths[i], "/");
-	command_with_path = strcat(path_with_slash, command);
-
-	if(access(command_with_psath, F_OK) == 0)
-	{
-	
-		return (command_with_path);
+		if (command[i] == '/')
+			return (1);
 	}
-	}
-		 return (NULL);
-	}
-
-	void print_env(){
-	
-	}
-	/**
-	 * check command.
-	 * will return 1 if the command is valid 
-	 * return 0 if the command is invalid
-	 **/
-	int check_command(char * command){
-		int i = 0;
-		char * command_with_path;
-	
-	for (i = 0; command[i] != '/0'; i++)
-	{
-	if (command[i] == '/'){
-
-		return (1);
-	}
-	}
-
 	command_with_path = get_path(command);
-
-	if(command_with_path != NULL)
-	{
+	if (command_with_path != NULL)
 		return (1);
-	}
-
-	for(i = 0; built_in[i] != NULL; i++)
+	for (i = 0; built_in[i] != NULL; i++)
 	{
-	if(strcmp(command, build_in[i]) == 0)
-	{
-		return (1);
+		if (strcmp(commsnd, built_in[i]) == 0)
+			return (1);
 	}
-	}
-
 	return (0);
+}
 
+/**
+ * remove_last_newline - a function that will remove
+ * the last new line of a string
+ * @string : a pointer to the string we want to use.
+ */
+void remove_last_newline(char *string)
+{
+	int i = 0;
+
+	while (string[i] != '\0')
+	{
+		if (string[i] == '\n')
+		break;
+	i++;
 	}
+}
