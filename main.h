@@ -18,5 +18,14 @@ void remove_last_newline(char * string);
 void custom_getline(char * string);
 void print_error(char * command);
 
+typedef struct Alias {
+    char *name;
+    char *value;
+} Alias;
+
+void manage_aliases(void);
+void add_alias(char *name, char *value);
+void print_aliases();
+void remove_alias(const char *name)
 
 #endif
