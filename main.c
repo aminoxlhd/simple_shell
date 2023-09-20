@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 			run_command(argv[0], args);
 		} else
 		{
-			print_error(argv[0], args[0]);
+			print_error(argv[0]);
 		}
 		free(binaryPath);
 	}
@@ -84,7 +84,7 @@ void run_command(char *shell, char **args)
 		int exec = run_shell(args);
 
 		if (exec == -1)
-			print_error(shell, args[0]);
+			print_error(shell);
 		exit(1);
 	} else
 	{
@@ -94,13 +94,10 @@ void run_command(char *shell, char **args)
 
 /**
  * print_error - Function that prints the error if a command isn't found.
- * @command : a string which is the command.
  * @shell: shell
  */
-void print_error(char *shell, char *command)
+void print_error(char *shell)
 {
 	printf("%s", shell);
-	printf(": 1: ");
-	printf("%s", command);
-	printf(": not found\n");
+	printf(": No such file or directory\n");
 }
