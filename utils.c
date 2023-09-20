@@ -17,7 +17,7 @@ int count_words(char *string, char delim)
 		if (string[i] != delim && (string[i + 1] == delim || string[i + 1]  ==
 					'\t' || string[i + 1] == '\0'))
 			count++;
-		i++
+		i++;
 	}
 	return (count);
 }
