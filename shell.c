@@ -17,6 +17,12 @@ int run_shell(char **command)
 	int execution = 0;
 	char *command_with_path = get_path(command[0]);
 
+	execution = execve(command[0] , command, environments);
+
+	if (execution == -1)
+	{
+		char * command_with_path = get_path(command[0]);
+
 		if (command_with_path == NULL)
 		{
 
@@ -24,6 +30,6 @@ int run_shell(char **command)
 		}
 
 		execution = execve(command_with_path, command, environments);
-
+	}
 	return (execution);
 }
