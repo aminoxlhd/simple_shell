@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
 	char **args;
 	int i = 0, status = 0;
 
+	(void)argc;
+
 	while (1)
 	{
 		printf(":) ");
@@ -37,7 +39,7 @@ int main(int argc, char *argv[])
 				}
 				continue;
 			}
-			run_command(args);
+			run_command(argv[0], args);
 		} else
 		{
 			print_error(argv[0], args[0]);
@@ -69,9 +71,10 @@ int handle_exit(char **args)
  * run_command - a function that will create a fork
  * and run the command, if the command doesn't exists
  * it'll print an error
- * @args : tokenized command with arguments.
+ * @args: tokenized command with arguments.
+ * @shell: shell
  */
-void run_command(char **args)
+void run_command(char *shell, char **args)
 {
 	pid_t pid;
 
@@ -81,7 +84,7 @@ void run_command(char **args)
 		int exec = run_shell(args);
 
 		if (exec == -1)
-			print_error(args[0]);
+			print_error(shell, args[0]);
 		exit(1);
 	} else
 	{
