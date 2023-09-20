@@ -14,7 +14,7 @@ int main(void)
 
 	while (1)
 	{
-		printf("#cisfun$ ");
+		printf(":) ");
 		binaryPath = (char *) malloc(bufsize * sizeof(char));
 		getline(&binaryPath, &bufsize, stdin);
 		remove_last_newline(binaryPath);
