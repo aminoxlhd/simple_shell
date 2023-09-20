@@ -18,16 +18,8 @@ void remove_last_newline(char *string);
 void custom_getline(char *string);
 void run_command(char **args);
 void print_error(char *command);
-char *m_strtok(char* string, const char* delim);
+char *m_strtok(char *string, const char *delim);
 int handle_exit(char **args);
-void add_alias(const char *name, const char *value);
-void print_aliases();
-void remove_alias(const char *name);
 
-typedef struct Alias
-{
-	char name[100];
-	char value[100];
-} Alias;
 
 #endif

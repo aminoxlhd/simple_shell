@@ -37,7 +37,7 @@ char **split_arguments(char *binaryPath, char *delim)
 
 	count = count_words(binaryPath, delim[0]);
 	arguments = malloc(sizeof(char *) * (count + 1));
-	
+
 	ptr = m_strtok(binaryPath, delim);
 
 	while (ptr != NULL)
