@@ -4,7 +4,7 @@
 * Function that run a shell command.
 * the funciton will try to run the simple command
 * if it's not found, it'll look in the PATH.
-* if not found will return -1.
+*
 */
 int run_shell(char **command)
 {
@@ -19,8 +19,13 @@ int run_shell(char **command)
 
 		if (command_with_path == NULL)
 		{
+
 		return (-1);
 	}
+
+			return (-1);
+		}
+
 		execution = execve(command_with_path, command, environments);
 	}
 
