@@ -15,13 +15,12 @@ int run_shell(char **command)
 {
 	char *environments[] = { NULL };
 	int execution = 0;
-	char *command_with_path = get_path(command[0]);
 
-	execution = execve(command[0] , command, environments);
+	execution = execve(command[0], command, environments);
 
 	if (execution == -1)
 	{
-		char * command_with_path = get_path(command[0]);
+		char *command_with_path = get_path(command[0]);
 
 		if (command_with_path == NULL)
 		{
