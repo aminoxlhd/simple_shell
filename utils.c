@@ -1,34 +1,33 @@
 #include "main.h"
-#include <string.h>
 
 static char *built_in[] = {"exit", "env", NULL};
+
 /**
-* count_words - count how many words in a string
-* by delimeter
-* @string : the string we use.
-* @delim : the delimeter we use.
-* Return: the number of words.
-*/
+ * count_words - count how many words in a string
+ * @string : the string we use.
+ * @delim : the delimeter we use.
+ * Return: the number of words.
+ */
 int count_words(char *string, char delim)
 {
 	int i = 1, count = 0;
 
 	while (string[i] != '\0')
 	{
-	if (string[i] != delim && (string[i + 1] == delim || string[i + 1] ==
-	'\t' || string[i + 1] == '\0'))
-		count++;
-	i++;
-}
+		if (string[i] != delim && (string[i + 1] == delim || string[i + 1]  ==
+					'\t' || string[i + 1] == '\0'))
+			count++;
+		i++
+	}
 	return (count);
 }
 
 /**
-*split_arguments - a function that split string by delimeter
-*@binaryPath : the string we want to split
-*@delim the delimeter we gonna use.
-*Return : a pointer to char * with the word splited.
-*/
+ * split_arguments - a function that split a string by a delimeter
+ * @binaryPath : the string we want to split
+ * @delim : the delimeter we want to use.
+ * Return: a pointer to char* with the words splitted.
+ */
 char **split_arguments(char *binaryPath, char *delim)
 {
 	char **arguments;
@@ -53,12 +52,12 @@ char **split_arguments(char *binaryPath, char *delim)
 }
 
 /**
-* get_path - a function that return the right path for the command
-* otherwise return NULL
-* @command : the command we want to check.
-*
-* Return: either the path, or NULL
-**/
+ * get_path - a function that return the right path for the command
+ * otherwise returns NULL
+ * @command : the command we want to check.
+ *
+ * Return: either the path, or NULL
+ */
 char *get_path(char *command)
 {
 	int i = 0;
@@ -70,21 +69,24 @@ char *get_path(char *command)
 
 	strcpy(path_cpy, path);
 	paths = split_arguments(path_cpy, ":");
+
 	for (i = 0; paths[i] != NULL; i++)
 	{
 		path_with_slash = strcat(paths[i], "/");
 		command_with_path = strcat(path_with_slash, command);
+
 		if (access(command_with_path, F_OK) == 0)
 			return (command_with_path);
 	}
 	return (NULL);
 }
+
 /**
-*check_command - a function that will check if a command is valid
-*@command : the command we want to check
-*Return : will return 1 if the command is valid
-*will return 0 if the command is invalid
-*/
+ * check_command - a function that will check if a command is valid.
+ * @command : the command we want to check.
+ * Return: will return 1 if the command is valid
+ * will return 0 if the command is invalid
+ */
 int check_command(char *command)
 {
 	int i = 0;
@@ -95,9 +97,10 @@ int check_command(char *command)
 		if (command[i] == '/')
 			return (1);
 	}
-	command_with_path = get_path(command);
+	command_with_path =  get_path(command);
 	if (command_with_path != NULL)
 		return (1);
+
 	for (i = 0; built_in[i] != NULL; i++)
 	{
 		if (strcmp(command, built_in[i]) == 0)
@@ -105,11 +108,12 @@ int check_command(char *command)
 	}
 	return (0);
 }
+
 /**
-*remove_last_newline - a function that will remove
-*the last new line of a string
-*@string : a pointer to the string we want to use.
-*/
+ * remove_last_newline - a function that will remove
+ * the last new line of a string
+ * @string : a pointer to the string we want to use.
+ */
 void remove_last_newline(char *string)
 {
 	int i = 0;
