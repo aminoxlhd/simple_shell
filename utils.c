@@ -1,4 +1,5 @@
 #include "main.h"
+#include <string.h>
 
 static char *built_in[] = {"exit", "env", NULL};
 /**
@@ -35,8 +36,8 @@ char **split_arguments(char *binaryPath, char *delim)
 	char *ptr;
 
 	count = count_words(binaryPath, delim[0]);
-	arguments[j] = malloc(sizeof(char *) * (count + 1));
-
+	arguments = malloc(sizeof(char *) * (count + 1));
+	
 	ptr = m_strtok(binaryPath, delim);
 
 	while (ptr != NULL)
@@ -69,7 +70,7 @@ char *get_path(char *command)
 
 	strcpy(path_cpy, path);
 	paths = split_arguments(path_cpy, ":");
-	for (i = 0; path[i] != NULL; i++)
+	for (i = 0; paths[i] != NULL; i++)
 	{
 		path_with_slash = strcat(paths[i], "/");
 		command_with_path = strcat(path_with_slash, command);
@@ -91,7 +92,7 @@ int check_command(char *command)
 
 	for (i = 0; command[i] != '\0'; i++)
 	{
-		if (commad[i] == '\')
+		if (command[i] == '/')
 			return (1);
 	}
 	command_with_path = get_path(command);
@@ -100,8 +101,10 @@ int check_command(char *command)
 	for (i = 0; built_in[i] != NULL; i++)
 	{
 		if (strcmp(command, built_in[i]) == 0)
-			return (0);
+			return (1);
 	}
+	return (0);
+}
 /**
 *remove_last_newline - a function that will remove
 *the last new line of a string
