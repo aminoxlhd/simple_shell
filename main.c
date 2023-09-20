@@ -2,10 +2,11 @@
 
 /**
  * main - Entry Point.
- *
+ * @argc: number of arguments
+ * @argv: arguments
  * Return: Always 0 (Success)
  */
-int main(void)
+int main(int argc, char *argv[])
 {
 	size_t bufsize = 1024;
 	char *binaryPath;
@@ -39,7 +40,7 @@ int main(void)
 			run_command(args);
 		} else
 		{
-			print_error(args[0]);
+			print_error(argv[0], args[0]);
 		}
 		free(binaryPath);
 	}
@@ -91,11 +92,10 @@ void run_command(char **args)
 /**
  * print_error - Function that prints the error if a command isn't found.
  * @command : a string which is the command.
+ * @shell: shell
  */
-void print_error(char *command)
+void print_error(char *shell, char *command)
 {
-	char *shell = getenv("SHELL");
-
 	printf("%s", shell);
 	printf(": 1: ");
 	printf("%s", command);
