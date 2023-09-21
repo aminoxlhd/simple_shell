@@ -11,8 +11,7 @@ int main(int argc, char *argv[])
 	size_t bufsize = 1024;
 	char *binaryPath;
 	char **args;
-	int i = 0, status = 0;
-
+	int  status = 0;
 	(void)argc;
 
 	while (1)
@@ -20,6 +19,8 @@ int main(int argc, char *argv[])
 		m_puts("$ ");
 		binaryPath = (char *) malloc(bufsize * sizeof(char));
 		m_getline(binaryPath);
+		if (strlen(binaryPath) == 0)
+			break;
 		remove_last_newline(binaryPath);
 		args = split_arguments(binaryPath, " ");
 		if (check_command(args[0]) == 1)
@@ -31,13 +32,7 @@ int main(int argc, char *argv[])
 			}
 			if (strcmp(args[0], "env") == 0)
 			{
-				i = 0;
-				while (environ[i])
-				{
-					m_puts(environ[i]);
-					m_puts("\n");
-					i++;
-				}
+				print_env();
 				continue;
 			}
 			run_command(argv[0], args);
@@ -48,6 +43,22 @@ int main(int argc, char *argv[])
 		free(binaryPath);
 	}
 	return (status);
+}
+
+/**
+ * print_env - a function that will print
+ * the env variables
+ **/
+void print_env(void)
+{
+	int i = 0;
+
+	while (environ[i])
+	{
+		m_puts(environ[i]);
+		m_puts("\n");
+		i++;
+	}
 }
 
 /**
@@ -78,6 +89,7 @@ int handle_exit(char **args)
 void run_command(char *shell, char **args)
 {
 	pid_t pid;
+	int status;
 
 	pid = fork();
 	if (pid == 0)
@@ -89,7 +101,7 @@ void run_command(char *shell, char **args)
 		exit(1);
 	} else
 	{
-		wait(NULL);
+		waitpid(pid, &status, WUNTRACED);
 	}
 }
 

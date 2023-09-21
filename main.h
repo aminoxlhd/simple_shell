@@ -22,5 +22,5 @@ char *m_strtok(char *string, const char *delim);
 int handle_exit(char **args);
 int m_puts(char *string);
 void m_getline(char *string);
-
+void print_env(void);
 #endif
