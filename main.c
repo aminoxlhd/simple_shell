@@ -16,6 +16,9 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
+		if (isatty() != 1)
+			break;
+
 		binaryPath = (char *) malloc(bufsize * sizeof(char));
 		m_getline(binaryPath);
 		if (strlen(binaryPath) == 0)
