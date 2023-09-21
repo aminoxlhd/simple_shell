@@ -28,7 +28,7 @@ int run_shell(char **command)
 		return (-1);
 		}
 
-		execution = execve(command_with_path, command, environments);
+		execution = execve(command_with_path, command, environ);
 	}
 	return (execution);
 }
