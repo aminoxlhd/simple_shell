@@ -67,3 +67,27 @@ int m_puts(char *string)
 	}
 	return (count);
 }
+
+/**
+ * m_getline - a custom getline function
+ * will fill the string paramter
+ * @string: the string we want to fill.
+ **/
+void m_getline(char *string)
+{
+	char character;
+	int reader = 0, i = 0;
+
+	while (character != '\n' && character != EOF)
+	{
+		reader = read(STDIN_FILENO, &character, 1);
+		if (reader == 0)
+		{
+			break;
+		}
+
+		string[i] = character;
+		i++;
+	}
+	string[i] = '\0';
+}

@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	{
 		m_puts("$ ");
 		binaryPath = (char *) malloc(bufsize * sizeof(char));
-		getline(&binaryPath, &bufsize, stdin);
+		m_getline(binaryPath);
 		remove_last_newline(binaryPath);
 		args = split_arguments(binaryPath, " ");
 		if (check_command(args[0]) == 1)
