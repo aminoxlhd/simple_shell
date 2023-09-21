@@ -16,11 +16,12 @@ int check_command(char *command);
 void print_env(void);
 void remove_last_newline(char *string);
 void custom_getline(char *string);
-void run_command(char *shell, char **args);
+int run_command(char *shell, char **args);
 void print_error(char *shell, char *command);
 char *m_strtok(char *string, const char *delim);
 int handle_exit(char **args);
 int m_puts(char *string);
 void m_getline(char *string);
 void print_env(void);
+int passive(char *shell);
 #endif

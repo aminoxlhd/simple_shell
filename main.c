@@ -13,34 +13,37 @@ int main(int argc, char *argv[])
 	char **args;
 	int  status = 0;
 	(void)argc;
-
-	while (1)
-	{
-		m_puts("$ ");
-		binaryPath = (char *) malloc(bufsize * sizeof(char));
-		getline(&binaryPath, &bufsize, stdin);
-		if (strlen(binaryPath) == 0)
-			break;
-		remove_last_newline(binaryPath);
-		args = split_arguments(binaryPath, " \t\r\n\a\"");
-		if (check_command(args[0]) == 1)
+	if(isatty(STDIN_FILENO) != 1)
+		passive(argv[0]);
+	else{
+		while(1)
 		{
-			if (strcmp(args[0], "exit") == 0)
-			{
-				status = handle_exit(args);
+			m_puts("$ ");
+			binaryPath = (char *) malloc(bufsize * sizeof(char));
+			getline(&binaryPath, &bufsize, stdin);
+			if (strlen(binaryPath) == 0)
 				break;
-			}
-			if (strcmp(args[0], "env") == 0)
+			remove_last_newline(binaryPath);
+			args = split_arguments(binaryPath, " \t\r\n\a\"");
+			if (check_command(args[0]) == 1)
 			{
-				print_env();
-				continue;
+				if (strcmp(args[0], "exit") == 0)
+				{
+					status = handle_exit(args);
+					break;
+				}
+				if (strcmp(args[0], "env") == 0)
+				{
+					print_env();
+					continue;
+				}
+				run_command(argv[0], args);
+			} else
+			{
+				print_error(argv[0], args[0]);
 			}
-			run_command(argv[0], args);
-		} else
-		{
-			print_error(argv[0], args[0]);
+			free(binaryPath);
 		}
-		free(binaryPath);
 	}
 	return (status);
 }
@@ -86,15 +89,15 @@ int handle_exit(char **args)
  * @args: tokenized command with arguments.
  * @shell: shell
  */
-void run_command(char *shell, char **args)
+int run_command(char *shell, char **args)
 {
 	pid_t pid;
-	int status;
+	int status, exec = 0;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		int exec = run_shell(args);
+		exec = run_shell(args);
 
 		if (exec == -1)
 			print_error(shell, args[0]);
@@ -103,6 +106,8 @@ void run_command(char *shell, char **args)
 	{
 		waitpid(pid, &status, WUNTRACED);
 	}
+
+	return exec;
 }
 
 /**
