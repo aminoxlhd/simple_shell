@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
 		binaryPath = (char *) malloc(bufsize * sizeof(char));
 		m_getline(binaryPath);
-		if (strlen(binaryPath) == 0)
+		if (strlen(binaryPath) != 0)
 			break;
 		remove_last_newline(binaryPath);
 		args = split_arguments(binaryPath, " ");
