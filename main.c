@@ -13,10 +13,11 @@ int main(int argc, char *argv[])
 	char **args;
 	int  status = 0;
 	(void)argc;
-	if(isatty(STDIN_FILENO) != 1)
+	if (isatty(STDIN_FILENO) != 1)
 		passive(argv[0]);
-	else{
-		while(1)
+	else
+	{
+		while (1)
 		{
 			m_puts("$ ");
 			binaryPath = (char *) malloc(bufsize * sizeof(char));
@@ -88,6 +89,7 @@ int handle_exit(char **args)
  * it'll print an error
  * @args: tokenized command with arguments.
  * @shell: shell
+ * Return: the status
  */
 int run_command(char *shell, char **args)
 {
@@ -107,7 +109,7 @@ int run_command(char *shell, char **args)
 		waitpid(pid, &status, WUNTRACED);
 	}
 
-	return exec;
+	return (exec);
 }
 
 /**

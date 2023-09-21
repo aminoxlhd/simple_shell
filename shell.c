@@ -20,18 +20,24 @@ int run_shell(char **command)
 	return (execution);
 }
 
+/**
+ * read_input : a function that reads the input
+ * character by character and stops at EOF
+ * Return: the readed line.
+ **/
 char *read_input(void)
 {
 	int i = 0, bufferSize = 1024;
 	char *binaryPath = malloc(sizeof(char) * bufferSize);
 	char character;
 
-	while(1)
+	while (1)
 	{
 		character = getchar();
-		if(character == '\n'){
+		if (character == '\n')
+		{
 			binaryPath[i] = '\0';
-			return binaryPath;
+			return (binaryPath);
 		}
 		else if (character == EOF)
 			free(binaryPath);
@@ -41,7 +47,11 @@ char *read_input(void)
 	}
 }
 
-
+/**
+ * passive - a function run in the passive mode.
+ * @shell: the shell wei run in case of errors.
+ * Return: the status of the executed command.
+ **/
 int passive(char *shell)
 {
 	char *binaryPath;
@@ -54,6 +64,6 @@ int passive(char *shell)
 	free(binaryPath);
 	free(args);
 
-	return status;
+	return (status);
 }
 
