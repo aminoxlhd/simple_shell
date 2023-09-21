@@ -16,8 +16,9 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
+		m_puts("$ ");
 		binaryPath = (char *) malloc(bufsize * sizeof(char));
-		m_getline(binaryPath);
+		getline(&binaryPath, &bufsize, stdin);
 		if (strlen(binaryPath) == 0)
 			break;
 		remove_last_newline(binaryPath);
