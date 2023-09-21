@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 		if (strlen(binaryPath) == 0)
 			break;
 		remove_last_newline(binaryPath);
-		args = split_arguments(binaryPath, " ");
+		args = split_arguments(binaryPath, " \t\r\n\a\"");
 		if (check_command(args[0]) == 1)
 		{
 			if (strcmp(args[0], "exit") == 0)

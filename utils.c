@@ -41,8 +41,7 @@ char **split_arguments(char *binaryPath, char *delim)
 
 	while (ptr != NULL)
 	{
-		arguments[j] = malloc(sizeof(char) * (strlen(ptr) + 1));
-		strcpy(arguments[j], ptr);
+		arguments[j] = ptr;
 		ptr = m_strtok(NULL, delim);
 		j++;
 	}
