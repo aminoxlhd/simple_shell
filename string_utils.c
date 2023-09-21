@@ -40,3 +40,30 @@ char *m_strtok(char *string, const char *delim)
 		return (start);
 	}
 }
+
+/**
+ * m_putchar - a function that writes one character
+ * @c : the character
+ * Return: the number of characters wroten
+ **/
+int m_putchar(char c)
+{
+	return (write(STDIN_FILENO, &c, 1));
+}
+
+/**
+ * m_puts - a function that write a string
+ * @string : the string we want to write
+ * Return: the number of chars wrotten.
+ **/
+int m_puts(char *string)
+{
+	int i = 0, count = 0;
+
+	while (string[i])
+	{
+		count = count + m_putchar(string[i]);
+		i++;
+	}
+	return (count);
+}

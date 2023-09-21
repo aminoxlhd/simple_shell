@@ -20,6 +20,7 @@ void run_command(char *shell, char **args);
 void print_error(char *shell);
 char *m_strtok(char *string, const char *delim);
 int handle_exit(char **args);
+int m_puts(char *string);
 
 
 #endif

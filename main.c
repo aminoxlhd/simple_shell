@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
-		printf("$ ");
+		m_puts("$ ");
 		binaryPath = (char *) malloc(bufsize * sizeof(char));
 		getline(&binaryPath, &bufsize, stdin);
 		remove_last_newline(binaryPath);
@@ -34,7 +34,8 @@ int main(int argc, char *argv[])
 				i = 0;
 				while (environ[i])
 				{
-					printf("%s\n", environ[i]);
+					m_puts(environ[i]);
+					m_puts("\n");
 					i++;
 				}
 				continue;
@@ -98,6 +99,6 @@ void run_command(char *shell, char **args)
  */
 void print_error(char *shell)
 {
-	printf("%s", shell);
-	printf(": No such file or directory\n");
+	m_puts(shell);
+	m_puts(": No such file or directory\n");
 }
