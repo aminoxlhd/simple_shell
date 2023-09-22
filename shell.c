@@ -21,7 +21,7 @@ int run_shell(char **command)
 }
 
 /**
- * read_input : a function that reads the input
+ * read_input - a function that reads the input
  * character by character and stops at EOF
  * Return: the readed line.
  **/
