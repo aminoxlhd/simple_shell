@@ -37,7 +37,7 @@ char *read_input(void)
 		if (character == -1)
 		{
 			free(binaryPath);
-			return NULL;
+			return (NULL);
 		}
 		if (character == '\n')
 		{
