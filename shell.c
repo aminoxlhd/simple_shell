@@ -34,13 +34,16 @@ char *read_input(void)
 	while (1)
 	{
 		character = getchar();
+		if (character == -1)
+		{
+			free(binaryPath);
+			return NULL;
+		}
 		if (character == '\n')
 		{
 			binaryPath[i] = '\0';
 			return (binaryPath);
 		}
-		else if (character == EOF)
-			free(binaryPath);
 		else
 			binaryPath[i] = character;
 		i++;
@@ -59,11 +62,14 @@ int passive(char *shell)
 	int status;
 
 	binaryPath = read_input();
-	args = split_arguments(binaryPath, " \t\r\n\"");
-	status = run_command(shell, args);
-	free(binaryPath);
-	free(args);
-
+	while (binaryPath != NULL)
+	{
+		args = split_arguments(binaryPath, " \t\r\n\"");
+		status = run_command(shell, args);
+		free(binaryPath);
+		free(args);
+		binaryPath = read_input();
+	}
 	return (status);
 }
 
