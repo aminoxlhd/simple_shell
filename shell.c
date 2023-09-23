@@ -72,8 +72,6 @@ int passive(char *shell)
 		args = split_arguments(binaryPath, " \t\r\n\"");
 		if (strcmp(args[0], "exit") == 0)
 			status = handle_exit(args);
-		else if (strcmp(args[0], "env") == 0)
-			print_env();
 		else
 			status = run_command(shell, args);
 		free(binaryPath);
