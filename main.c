@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	int  status = 0;
 	(void)argc;
 	if (isatty(STDIN_FILENO) != 1)
-		passive(argv[0]);
+		status = passive(argv[0]);
 	else
 	{
 		while (1)
@@ -102,11 +102,17 @@ int run_command(char *shell, char **args)
 		exec = run_shell(args);
 
 		if (exec == -1)
+		{
 			print_error(shell, args[0]);
+			free(args);
+			exit(127);
+		}
+		free(args);
 		exit(1);
 	} else
 	{
 		waitpid(pid, &status, WUNTRACED);
+		exec = WEXITSTATUS(status);
 	}
 
 	return (exec);
@@ -119,8 +125,5 @@ int run_command(char *shell, char **args)
  */
 void print_error(char *shell, char *command)
 {
-	m_puts(shell);
-	m_puts(": 1: ");
-	m_puts(command);
-	m_puts(": not found\n");
+	fprintf(stderr, "%s: 1: %s: not found\n", shell, command);
 }

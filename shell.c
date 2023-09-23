@@ -47,6 +47,11 @@ char *read_input(void)
 		else
 			binaryPath[i] = character;
 		i++;
+		if (i >= bufferSize)
+		{
+			bufferSize = bufferSize * 2;
+			binaryPath = realloc(binaryPath, sizeof(char) * bufferSize);
+		}
 	}
 }
 
@@ -65,7 +70,12 @@ int passive(char *shell)
 	while (binaryPath != NULL)
 	{
 		args = split_arguments(binaryPath, " \t\r\n\"");
-		status = run_command(shell, args);
+		if (strcmp(args[0], "exit") == 0)
+			status = handle_exit(args);
+		else if (strcmp(args[0], "env") == 0)
+			print_env();
+		else
+			status = run_command(shell, args);
 		free(binaryPath);
 		free(args);
 		binaryPath = read_input();
